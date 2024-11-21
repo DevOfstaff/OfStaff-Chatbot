@@ -1,0 +1,53 @@
+# domain.yml
+version: "3.1"
+
+intents:
+  - checkin
+
+slots:
+  recipient:
+    type: text
+    mappings:
+      - type: from_llm
+  amount:
+    type: float
+    mappings:
+      - type: from_llm
+  progress_input:
+    type: text
+    mappings:
+      - type: from_llm
+  progress_category:
+    type: categorical
+    values:
+      - positive
+      - neutral
+      - none
+    mappings:
+      - type: custom
+        action: action_categorize_progress
+
+actions:
+  - action_categorize_progress
+  - action_suggest_next_step
+  - utter_ask_progress
+  - utter_wrap_up
+  - utter_invalid_progress
+  - utter_positive_feedback
+  - utter_neutral_feedback
+
+responses:
+  utter_ask_progress:
+    - text: "What's one thing you accomplished today toward your goals?"
+  
+  utter_positive_feedback:
+    - text: "Great job! Small steps lead to big wins. To keep the momentum, consider {suggestion}"
+  
+  utter_neutral_feedback:
+    - text: "That's okay. Some days are slower. How about {suggestion}?"
+  
+  utter_wrap_up:
+    - text: "Got it! I'll track this for you. Let's check in again tomorrow. Keep it up!"
+
+  utter_invalid_progress:
+    - text: "I couldn't understand that. Could you please tell me what you accomplished today?"

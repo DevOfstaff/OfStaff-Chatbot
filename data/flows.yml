@@ -1,0 +1,17 @@
+# flows.yml
+flows:
+  daily_checkin:
+    description: Daily progress check-in flow to help users track and reflect on their goals
+    nlu_trigger:
+      - intent: checkin
+    if: "context.previous_flow_name != 'daily_checkin'"
+    steps:
+      - collect: progress_input
+        description: "User's description of what they accomplished today"
+        utter: utter_ask_progress
+        rejections:
+          - if: "not slots.progress_input"
+            utter: utter_invalid_progress
+      - action: action_categorize_progress
+      - action: action_suggest_next_step
+      - action: utter_wrap_up
