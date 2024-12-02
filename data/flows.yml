@@ -1,4 +1,4 @@
-# flows.yml
+#flows.yml
 flows:
   daily_checkin:
     description: Daily progress check-in flow to help users track and reflect on their goals
@@ -6,6 +6,7 @@ flows:
       - intent: checkin
     if: "context.previous_flow_name != 'daily_checkin'"
     steps:
+      - action: action_debug_intent
       - collect: progress_input
         description: "User's description of what they accomplished today"
         utter: utter_ask_progress
@@ -15,3 +16,27 @@ flows:
       - action: action_categorize_progress
       - action: action_suggest_next_step
       - action: utter_wrap_up
+      - action: action_set_previous_flow
+
+  career_development:
+    description: Career development insights flow to help users identify growth areas and plan next steps
+    nlu_trigger:
+      - intent: plan_career_growth
+    steps:
+      - action: action_debug_intent
+      - collect: aspirations
+        description: "User's aspirations for career growth"
+        utter: utter_ask_aspirations
+        rejections:
+          - if: "not slots.aspirations"
+            utter: utter_invalid_aspirations
+      - action: action_suggest_next_step_career
+      - action: action_provide_learning_path
+      - collect: progress_tracking
+        description: "Ask user if they want to track progress weekly"
+        utter: utter_track_progress
+        rejections:
+          - if: "slots.progress_tracking is None"
+            utter: utter_invalid_progress_tracking
+      - action: action_track_progress_career
+      - action: action_set_previous_flow
