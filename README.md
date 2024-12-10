@@ -1,48 +1,31 @@
-# codespaces-quickstart
-Get started with Rasa Pro in the browser using GitHub Codespaces.
+# Steps to run the two Rasa flows locally
+1. Clone this repo locally.
+2. Go to main branch.
+3. Create a VENV and activate it.
+4. Set RASA_PRO_LICENSE and OPENAI_API_KEY in the .env file.
+5. Install rasa locally.
+- Option 1: Follow these instructions:
+https://rasa.com/docs/rasa-pro/installation/python/installation
+- Option 2: Enter these commands:
+```
+pip install uv
+uv pip install rasa-pro --extra-index-url=https://europe-west3-python.pkg.dev/rasa-releases/rasa-pro-python/simple/
+```
+6. Enter this command:
+```
+rasa train
+```
+7. Enter this command:
+```
+rasa inspect
+```
+8. Into the chatbot that opens, enter something like "check in" for Flow 1, and "I want to plan my career growth" for Flow 2.
 
-### Steps
 
-1. **Create a Codespace:**
-   - Click on the green "Code" button on this page, then scroll down to "Codespaces".
-   - Click on "Create codespace on main".
-
-2. **Set Up Environment:**
-   - In the codespace, open the `.env` file from this repo and add the required keys to that file.
-     ```
-     RASA_PRO_LICENSE='your_rasa_pro_license_key_here'
-     OPENAI_API_KEY='your_openai_api_key_here'
-     ```
-   - Set these environment variables by running 
-     ```
-     source .env
-     ```
-   - Activate your python environment by running
-     ```
-     source .venv/bin/activate
-     ```
-
-3. **Initialize a New Project:**
-   - In the terminal, run:
-     ```
-     rasa init --template tutorial
-     ```
-     and follow the instructions.
-
-4. **Train the Model:**
-   - In the terminal, run:
-     ```
-     rasa train
-     ```
-
-5. **Talk to your Bot:**
-   - In the terminal, run
-     ```
-     rasa inspect
-     ```
-     GitHub will show a notification, click on the green button to view the inspector where you can chat with your assistant.
-
-6. **Run Custom Actions:**
+# Notes: 
+1. This is a modified Rasa quickstart tutorial, originally for getting started with Rasa Pro in the browser using GitHub Codespaces.
+2. Below is part of that tutorial which may be useful:
+**Run Custom Actions:**
   In Rasa 3.10 and later, custom actions are automatically run as part of your running assistant. To double-check that this is set up correctly, ensure that your `endpoints.yml` file contains the following configuration:
    ```
    action_endpoint:
